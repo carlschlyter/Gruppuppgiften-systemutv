@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Customers</title>
-    <link rel="stylesheet" href="styles.css">
+<!--    <link rel="stylesheet" href="styles.css">-->
 </head>
 
 <body>
@@ -29,14 +29,19 @@ try {
      throw new \PDOException($e->getMessage(),(int)$e->getCode());
 }
 
-    $stmt = $pdo->query("SELECT customerName FROM customers group by customerName;");
+    $stmt = $pdo->query("SELECT country FROM customers group by country;");
 while ($row = $stmt->fetch())
 {
-    echo $row['customerName'] . "<br>";
+    echo $row['country'] . "<br>";
 }    
 
 ?>
+<h1>Sök kunder</h1>
 
+<form action="searchcustomer.php" method="get">
+        <input type="text" name="query">
+        <input type="submit" value="Search">   
+</form>
 </body>
 
 </html>
