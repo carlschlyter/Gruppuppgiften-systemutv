@@ -53,6 +53,7 @@ $customerNumber = '242';
         <input type="text" name="customer">
         <input type="submit" value="Search">   
 </form>
-  
+<br>
+<a href="customerstart.php"><strong><i>Kunder Startsida</i></strong></a>  
 </body>
 </html>
