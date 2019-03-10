@@ -29,19 +29,21 @@ try {
      throw new \PDOException($e->getMessage(),(int)$e->getCode());
 }
 
-    $stmt = $pdo->query("SELECT country FROM customers group by country;");
-while ($row = $stmt->fetch())
+$stmt = $pdo->query("SELECT * FROM customers order by customerName limit 20");
+    
+    while ($row = $stmt->fetch())
 {
-    echo $row['country'] . "<br>";
+    echo $row['customerNumber'] . " - " . $row['customerName'] . " - " .  $row['country'] .  "<br>";
 }    
 
 ?>
-<h1>Sök kunder</h1>
+<br>
+<a href="searchcustomer.php"><strong><i>Sök kunder</i></strong></a>
 
-<form action="searchcustomer.php" method="get">
+<!--<form action="searchcustomer.php" method="get">
         <input type="text" name="query">
         <input type="submit" value="Search">   
-</form>
+</form>-->
 </body>
 
 </html>

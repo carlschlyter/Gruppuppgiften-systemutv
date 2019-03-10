@@ -1,6 +1,40 @@
+
 <?php
-    mysql_connect("localhost", "root", "Carlphp2019") or die("Error connecting to database: ".mysql_error());
-    mysql_select_db("classicmodels") or die(mysql_error());   
+$host = 'localhost';
+$db = 'classicmodels';
+$user = 'root';
+$pass = 'Carlphp2019';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;
+ dbname=$db;
+ charset=$charset";
+
+ try {
+    $pdo = new PDO($dsn, $user, $pass);
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(),(int)$e->getCode());
+}
+
+if (isset($_GET['customer'])) {
+    $customerNumber = filter_input(INPUT_GET, 'customer', FILTER_SANITIZE_STRING);    
+
+    $stmt = $pdo->query("SELECT * FROM customers WHERE customerNumber = $customerNumber");
+
+    if ($row = $stmt->fetch()) {
+        print_r($row);
+        echo "<br>" . "<br>" .$row['customerNumber'] . " - " . $row['customerName'] . " - " .  $row['country'] .  "<br>";
+    } else {
+        echo 'Det finns ingen kund med det numret.';
+    }
+ } else {
+     echo 'Ingen kund vald.';
+}
+
+$customerNumber = '242';  
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -15,51 +49,10 @@
 <body>
 
 <h1>Sökresultat kunder</h1>
-
-<?php
-    $query = $_GET['query']; 
-    // gets value sent over search form
-     
-    $min_length = 3;
-    // you can set minimum length of the query if you want
-     
-    if(strlen($query) >= $min_length){ // if query length is more or equal minimum length then
-         
-        $query = htmlspecialchars($query); 
-        // changes characters used in html to their equivalents, for example: < to &gt;
-         
-        $query = mysql_real_escape_string($query);
-        // makes sure nobody uses SQL injection
-         
-        $raw_results = mysql_query("SELECT * FROM customers
-            WHERE ('customerName' LIKE '%".$query."%') OR ('country' LIKE '%".$query."%')") or die(mysql_error());
-             
-        // * means that it selects all fields, you can also write: `id`, `title`, `text`
-        // articles is the name of our table
-         
-        // '%$query%' is what we're looking for, % means anything, for example if $query is Hello
-        // it will match "hello", "Hello man", "gogohello", if you want exact match use `title`='$query'
-        // or if you want to match just full word so "gogohello" is out use '% $query %' ...OR ... '$query %' ... OR ... '% $query'
-         
-        if(mysql_num_rows($raw_results) > 0){ // if one or more rows are returned do following
-             
-            while($results = mysql_fetch_array($raw_results)){
-            // $results = mysql_fetch_array($raw_results) puts data from database into array, while it's valid it does the loop
-             
-                echo "<p><h3>".$results['title']."</h3>".$results['text']."</p>";
-                // posts results gotten from database(title and text) you can also show id ($results['id'])
-            }
-             
-        }
-        else{ // if there is no matching rows do following
-            echo "No results";
-        }
-         
-    }
-    else{ // if query length is less than minimum
-        echo "Minimum length is ".$min_length;
-    }
-?>    
-   
+<form action="searchcustomer.php" method="get">
+        <input type="text" name="customer">
+        <input type="submit" value="Search">   
+</form>
+  
 </body>
 </html>
