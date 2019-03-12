@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 <?php
     $host = 'localhost';
     $user = 'root';
@@ -15,12 +24,19 @@
         echo $row['customerName'] . '-' . $row['customerNumber'] . '<br>';
     }*/
 
-    $customer = 'Herkku';
+    $customer = 'France';
 
-    $sql = 'SELECT * FROM customers WHERE customerName = ?';
+    $sql = 'SELECT * FROM customers WHERE country = ?';
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$customer]);
     $customers = $stmt->fetchALL();
     
-    var_dump($customers);
+    //var_dump($customers);
+    foreach($customers as $customerEntry){
+        echo $customerEntry->customerName . '<br>';
+    } 
 ?>
+    
+</body>
+</html>
+
