@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+       
 <h1>Kunder Startsida</h1>
 
 <?php
@@ -29,24 +29,23 @@ try {
      throw new \PDOException($e->getMessage(),(int)$e->getCode());
 }
 
-$stmt = $pdo->query("SELECT * FROM customers limit 20");
+$stmt = $pdo->query("SELECT * FROM customers limit 20;");
     
-    while ($row = $stmt->fetch())
-    ?>
-    <a href="customers.php">#Customer Name#</a><br>
-    <?php
-{
-//    echo $row['customerNumber'] . " - " . $row['customerName'] . " - " .  $row['country'] .  "<br>";
+     while ($row = $stmt->fetch()) {
+        ?>
+        <a href="customers.php?customer=242">#Customer Name#</a><br>
+        <?php
+//        echo $row['customerNumber'] . " - " . $row['customerName'] . " - " .  $row['country'] .  "<br>";
 }    
 
 ?>
 <br>
 <a href="searchcustomer.php"><strong><i>Sök kunder</i></strong></a>
 
-<!--<form action="searchcustomer.php" method="get">
-        <input type="text" name="query">
+<form action="searchcustomer.php" method="get">
+        <input type="text" name="customer">
         <input type="submit" value="Search">   
-</form>-->
+</form>
 </body>
 
 </html>

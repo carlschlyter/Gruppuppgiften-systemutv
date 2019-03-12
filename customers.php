@@ -12,7 +12,7 @@
 
 <h1>Kunder</h1>
 
-<?php
+<?php 
 $host = 'localhost';
 $db = 'classicmodels';
 $user = 'root';
@@ -29,7 +29,7 @@ try {
      throw new \PDOException($e->getMessage(),(int)$e->getCode());
 }
 
-$stmt = $pdo->query("SELECT * FROM customers order by customerName limit 20");
+$stmt = $pdo->query("SELECT * FROM customers order by customerName limit 15");
     
     while ($row = $stmt->fetch())
 {
@@ -40,10 +40,10 @@ $stmt = $pdo->query("SELECT * FROM customers order by customerName limit 20");
 <br>
 <a href="searchcustomer.php"><strong><i>Sök kunder</i></strong></a>
 
-<!--<form action="searchcustomer.php" method="get">
-        <input type="text" name="query">
+<form action="searchcustomer.php" method="get">
+        <input type="text" name="customer">
         <input type="submit" value="Search">   
-</form>-->
+</form>
 </body>
 
 </html>
