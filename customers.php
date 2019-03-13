@@ -29,7 +29,7 @@ try {
      throw new \PDOException($e->getMessage(),(int)$e->getCode());
 }
 
-$stmt = $pdo->query("SELECT * FROM customers order by customerName limit 15");
+$stmt = $pdo->query("SELECT * FROM customers order by customerName limit 20");
     
     while ($row = $stmt->fetch())
 {
@@ -40,10 +40,13 @@ $stmt = $pdo->query("SELECT * FROM customers order by customerName limit 15");
 <br>
 <a href="searchcustomer.php"><strong><i>Sök kunder</i></strong></a>
 
+<!--
 <form action="searchcustomer.php" method="get">
         <input type="text" name="customer">
         <input type="submit" value="Search">   
 </form>
+-->
+
 </body>
 
 </html>

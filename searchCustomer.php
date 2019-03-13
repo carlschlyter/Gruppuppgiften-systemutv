@@ -19,10 +19,12 @@ $dsn = "mysql:host=$host;
 if (isset($_GET['customer'])) {
     $customerNumber = filter_input(INPUT_GET, 'customer', FILTER_SANITIZE_STRING);    
 
-    $stmt = $pdo->query("SELECT * FROM customers WHERE customerNumber = $customerNumber");
+//    $stmt = $pdo->query("SELECT * FROM customers WHERE customerNumber = $customerNumber");
+    $stmt = $pdo->prepare("SELECT * FROM customers WHERE customerNumber = $customerNumber");
+    $stmt->execute(['customer']);
 
     if ($row = $stmt->fetch()) {
-        print_r($row);
+//        print_r($row);
         echo "<br>" . "<br>" .$row['customerNumber'] . " - " . $row['customerName'] . " - " .  $row['country'] .  "<br>";
     } else {
         echo 'Det finns ingen kund med det numret.';
@@ -32,7 +34,6 @@ if (isset($_GET['customer'])) {
 }
 
 $customerNumber = '242';  
-
 
 
 ?>
@@ -48,12 +49,13 @@ $customerNumber = '242';
 </head>
 <body>
 
-<h1>Sökresultat kunder</h1>
+<h1>Sök kunder</h1>
 <form action="searchcustomer.php" method="get">
         <input type="text" name="customer">
         <input type="submit" value="Search">   
 </form>
+
 <br>
-<a href="customerstart.php"><strong><i>Kunder Startsida</i></strong></a>  
+<a href="customers.php"><strong><i>Kunder Startsida</i></strong></a>  
 </body>
 </html>

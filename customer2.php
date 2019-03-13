@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+
 <?php
     $host = 'localhost';
     $user = 'root';
@@ -24,16 +25,24 @@
         echo $row['customerName'] . '-' . $row['customerNumber'] . '<br>';
     }*/
 
-    $customer = 'France';
 
+    $customerCtry = 'Spain';
+    $customerNme = 'ANG Resellers';
+
+    $sql = 'SELECT * FROM customers WHERE country = :customerCtry && customerName = :customerNme';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['customerCtry' => $customerCtry, 'customerNme' => $customerNme]);
+    $posts = $stmt->fetchALL();
+
+ /*
     $sql = 'SELECT * FROM customers WHERE country = ?';
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$customer]);
-    $customers = $stmt->fetchALL();
-    
+    $posts = $stmt->fetchALL();
+*/    
     //var_dump($customers);
-    foreach($customers as $customerEntry){
-        echo $customerEntry->customerName . '<br>';
+    foreach($posts as $post){
+        echo $post->customerName . '<br>';
     } 
 ?>
     
